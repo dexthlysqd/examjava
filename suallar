@@ -1,0 +1,804 @@
+Finding the first unique character 2
+
+static class StringTask {
+
+    public int firstUniqChar(String s) {
+        int[] freq = new int[26];
+        for (int i = 0; i < s.length(); i++) {
+            freq[s.charAt(i) - 'a']++;
+        }
+        for (int i = 0; i < s.length(); i++) {
+            if (freq[s.charAt(i) - 'a'] == 1) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+}
+
+ ATM – Payment with Standart Banknotes 2
+
+
+static class ATMTask {
+
+    public String calculateATM(int amount) {
+        int[] notes = {100, 50, 20, 10, 5, 1};
+        StringBuilder sb = new StringBuilder();
+        for (int note : notes) {
+            while (amount >= note) {
+                if (sb.length() > 0) sb.append(",");
+                sb.append(note);
+                amount -= note;
+            }
+        }
+        return sb.toString();
+    }
+
+}
+
+  Sum of Backward Signals in a Circular Array 2
+
+public static int calculateCircularSum(int[] data, int startIndex) {
+    int sum = 0;
+    int n = data.length;
+    for (int i = 0; i < n; i++) {
+        int index = (startIndex - i + n) % n;
+        sum += data[index];
+    }
+    return sum;
+}
+  Caesar Cipher Encryption 2
+
+static class Task {
+
+    public String encrypt(String s, int shift) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c >= 'a' && c <= 'z') {
+                sb.append((char)((c - 'a' + shift) % 26 + 'a'));
+            } else if (c >= 'A' && c <= 'Z') {
+                sb.append((char)((c - 'A' + shift) % 26 + 'A'));
+            } else {
+                sb.append(c);
+            }
+        }
+        return sb.toString();
+    }
+
+}
+ 
+
+Intersection of Two Arrays, Score: 2
+public static int[] intersection(int[] arr1, int[] arr2) {
+    sort(arr1);
+    sort(arr2);
+    int[] temp = new int[Math.min(arr1.length, arr2.length)];
+    int i = 0, j = 0, k = 0;
+    while (i < arr1.length && j < arr2.length) {
+        if (arr1[i] < arr2[j]) {
+            i++;
+        } else if (arr1[i] > arr2[j]) {
+            j++;
+        } else {
+            if (k == 0 || temp[k - 1] != arr1[i]) {
+                temp[k++] = arr1[i];
+            }
+            i++;
+            j++;}
+    }
+    int[] res = new int[k];
+    for (int x = 0; x < k; x++) res[x] = temp[x];
+    return res;
+}
+
+private static void sort(int[] arr) {
+    for (int i = 0; i < arr.length; i++) {
+        for (int j = 0; j < arr.length - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                int t = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = t;}}}}
+
+
+
+
+
+Longest Common Prefix, Score: 2
+
+static class Task {
+
+    public String longestCommonPrefix(String[] strs) {
+        if (strs.length == 0) return "";
+        for (int i = 0; i < strs[0].length(); i++) {
+            char c = strs[0].charAt(i);
+            for (int j = 1; j < strs.length; j++) {
+                if (i >= strs[j].length() || strs[j].charAt(i) != c) {
+                    return strs[0].substring(0, i);
+                }
+            }
+        }
+        return strs[0];
+    }
+
+}
+ Finding the maximum degree of a general tree., Score: 2’
+
+public static int getMaxDegree(Node root) {
+    if (root == null) return 0;
+    int max = root.children.size();
+    for (Node child : root.children) {
+        int d = getMaxDegree(child);
+        if (d > max) max = d;
+    }
+    return max;
+}
+  Finding the Median of an Array, Score: 2
+
+public static double findMedian(int[] arr) {
+    for (int i = 0; i < arr.length; i++) {
+        for (int j = 0; j < arr.length - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                int t = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = t;
+            }
+        }
+    }
+    int n = arr.length;
+    if (n % 2 == 1) return arr[n / 2];
+    return (arr[n / 2 - 1] + arr[n / 2]) / 2.0;
+}
+ Teemo Attack - Poison Duration, Score: 2
+
+static class Task {
+
+    public int findPoisonedDuration(int[] timeSeries, int duration) {
+        if (timeSeries.length == 0) return 0;
+        int total = duration;
+        for (int i = 1; i < timeSeries.length; i++) {
+            total += Math.min(duration, timeSeries[i] - timeSeries[i - 1]);
+        }
+        return total;
+    }
+
+}
+
+  Finding the Highest-Value Elements, Score: 2
+
+static class PriorityTask {
+
+    public List<Integer> getTopK(int[] nums, int k) {
+        java.util.PriorityQueue<Integer> pq = new java.util.PriorityQueue<>();
+        for (int num : nums) {
+            pq.add(num);
+            if (pq.size() > k) pq.poll();
+        }
+        List<Integer> res = new java.util.ArrayList<>();
+        while (!pq.isEmpty()) res.add(pq.poll());
+        java.util.Collections.reverse(res);
+        return res;
+    }
+
+}
+ Conversion of Roman Numerals to Integers, Score: 2
+
+public static int romanToInt(String s) {
+    int res = 0;
+    for (int i = 0; i < s.length(); i++) {
+        int v = val(s.charAt(i));
+        if (i + 1 < s.length() && v < val(s.charAt(i + 1))) {
+            res -= v;
+        } else {
+            res += v;
+        }
+    }
+    return res;
+}
+
+private static int val(char c) {
+    if (c == 'I') return 1;
+    if (c == 'V') return 5;
+    if (c == 'X') return 10;
+    if (c == 'L') return 50;
+    if (c == 'C') return 100;
+    if (c == 'D') return 500;
+    return 1000;
+}
+ Maximum Difference Finding, Score: 2
+
+public static int maxProductDifference(int[] nums) {
+    for (int i = 0; i < nums.length; i++) {
+        for (int j = 0; j < nums.length - i - 1; j++) {
+            if (nums[j] > nums[j + 1]) {
+                int t = nums[j];
+                nums[j] = nums[j + 1];
+                nums[j + 1] = t;
+            }
+        }
+    }
+    int n = nums.length;
+    return nums[n - 1] * nums[n - 2] - nums[0] * nums[1];
+}
+ Bacterial Division Simulation, Score: 2
+
+public static int simulateBacteria(int m, int l, int t) {
+    int[] ages = new int[1];
+    ages[0] = 0;
+    for (int min = 1; min <= t; min++) {
+        int count = ages.length;
+        for (int i = 0; i < count; i++) {
+            ages[i]++;
+        }
+        int newCount = 0;
+        for (int age : ages) {
+            if (age < l && age % m == 0 && age > 0) {
+                newCount += 2;
+            } else if (age < l) {
+                newCount++;
+            }}
+        int[] next = new int[newCount];
+        int idx = 0;
+        for (int age : ages) {
+            if (age < l && age % m == 0 && age > 0) {
+                next[idx++] = 0;
+                next[idx++] = 0;
+            } else if (age < l) {
+                next[idx++] = age;
+            }
+        }
+        ages = next;
+    }
+    return ages.length; }
+ Restoration of a Unique Travel Route, Score: 2
+
+public static String[] reconstructItinerary(String[][] tickets) {
+    java.util.Map<String, String> map = new java.util.HashMap<>();
+    java.util.Set<String> arrivals = new java.util.HashSet<>();
+    for (String[] t : tickets) {
+        map.put(t[0], t[1]);
+        arrivals.add(t[1]);
+    }
+    String start = "";
+    for (String[] t : tickets) {
+        if (!arrivals.contains(t[0])) {
+            start = t[0];
+            break;
+        }
+    }
+    String[] res = new String[tickets.length + 1];
+    res[0] = start;
+    for (int i = 1; i < res.length; i++) {
+        res[i] = map.get(res[i - 1]);
+    }
+    return res;
+}
+ Surviving Person in a Circular Queue, Score: 2
+
+public static int findTheWinner(int n, int k) {
+    int res = 0;
+    for (int i = 2; i <= n; i++) {
+        res = (res + k) % i;
+    }
+    return res + 1;
+}
+  
+Root-to-leaf path sum, Score: 2
+
+public static boolean rootToLeafSum(TreeNode root, int targetSum) {
+    if (root == null) return false;
+    if (root.left == null && root.right == null) return root.val == targetSum;
+    return rootToLeafSum(root.left, targetSum - root.val) || rootToLeafSum(root.right, targetSum - root.val);
+}  Checking Strong Password Criteria, Score: 2
+
+public static boolean isStrongPassword(String password) {
+    if (password.length() < 8) return false;
+    boolean hasUpper = false, hasDigit = false;
+    for (int i = 0; i < password.length(); i++) {
+        char c = password.charAt(i);
+        if (Character.isUpperCase(c)) hasUpper = true;
+        if (Character.isDigit(c)) hasDigit = true;
+    }
+    return hasUpper && hasDigit;
+}
+ Duplicating Array Elements by Their Value (with IntTracker), Score: 2
+
+public static int[] expandArray(IntTracker nums) {
+    int total = 0;
+    for (int i = 0; i < nums.size(); i++) {
+        total += nums.get(i);
+    }
+    int[] res = new int[total];
+    int idx = 0;
+    for (int i = 0; i < nums.size(); i++) {
+        int val = nums.get(i);
+        for (int j = 0; j < val; j++) {
+            res[idx++] = val;
+        }
+    }
+    return res;
+}
+
+
+ Balanced binary tree, Score: 2
+
+public static boolean isBalanced(TreeNode root) {
+    return height(root) != -1;
+}
+
+private static int height(TreeNode node) {
+    if (node == null) return 0;
+    int left = height(node.left);
+    if (left == -1) return -1;
+    int right = height(node.right);
+    if (right == -1) return -1;
+    if (Math.abs(left - right) > 1) return -1;
+    return 1 + Math.max(left, right);
+}
+  
+ Gas Station, Score: 2
+
+static class Task {
+
+    public int canCompleteCircuit(int[] gas, int[] cost) {
+        int total = 0, tank = 0, start = 0;
+        for (int i = 0; i < gas.length; i++) {
+            total += gas[i] - cost[i];
+            tank += gas[i] - cost[i];
+            if (tank < 0) {
+                start = i + 1;
+                tank = 0;
+            }
+        }
+        return total >= 0 ? start : -1;
+    }
+
+}
+ Building the Queue Structure, Score: 2
+
+static class MyQueue {
+    int[] arr = new int[1000];
+    int front = 0, rear = 0, size = 0;
+
+    public void enqueue(int x) {
+        arr[rear] = x;
+        rear = (rear + 1) % 1000;
+        size++;
+    }
+
+    public int dequeue() {
+        if (size == 0) return -1;
+        int val = arr[front];
+        front = (front + 1) % 1000;
+        size--;
+        return val;
+    }
+
+    public int peek() {
+        if (size == 0) return -1;
+        return arr[front];
+    }
+
+}
+  Finding the Points Closest to a Target, Score: 2
+    public List<Integer> findClosest(int[] nums, int k, int target) {
+
+        PriorityQueue<Integer> pq = new PriorityQueue<>(
+                (a, b) -> Integer.compare(
+                        Math.abs(a - target),
+                        Math.abs(b - target))
+        );
+
+        for (int num : nums) {
+            pq.add(num);
+        }
+
+        List<Integer> result = new ArrayList<>();
+
+        for (int i = 0; i < k && !pq.isEmpty(); i++) {
+            result.add(pq.poll());
+        }
+
+        return result;
+    }
+}
+
+ Reversing Words in a String, Score: 2 
+
+public static String reverseWords(String s) {
+    String[] words = s.trim().split(" +");
+    StringBuilder sb = new StringBuilder();
+    for (int i = words.length - 1; i >= 0; i--) {
+        sb.append(words[i]);
+        if (i > 0) sb.append(" ");
+    }
+    return sb.toString();
+}
+  
+Bubble Sort, Score: 2
+
+public static void sort(IntTracker[] arr) {
+    for (int i = 0; i < arr.length; i++) {
+        for (int j = 0; j < arr.length - i - 1; j++) {
+            if (arr[j].getValue() > arr[j + 1].getValue()) {
+                IntTracker t = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = t;
+            }
+        }
+    }
+}
+ Validating a Mountain Array, Score: 2
+
+static class Task {
+
+    public boolean validMountainArray(int[] arr) {
+        int i = 0, n = arr.length;
+        while (i + 1 < n && arr[i] < arr[i + 1]) i++;
+        if (i == 0 || i == n - 1) return false;
+        while (i + 1 < n && arr[i] > arr[i + 1]) i++;
+        return i == n - 1;
+    }
+
+}
+ 1D Cellular Automaton (Live Cells), Score: 2
+
+public static int[] gameOfLife1D(int[] cells) {
+    int n = cells.length;
+    int[] next = new int[n];
+    for (int i = 0; i < n; i++) {
+        int left = i > 0 ? cells[i - 1] : 0;
+        int right = i < n - 1 ? cells[i + 1] : 0;
+        next[i] = (left == right) ? 0 : 1;
+    }
+    return next;
+}
+  The depth of a specific node in a binary tree., Score: 2
+
+public static int getDepth(TreeNode root, int target) {
+    if (root == null) return -1;
+    if (root.val == target) return 0;
+    int left = getDepth(root.left, target);
+    if (left != -1) return left + 1;
+    int right = getDepth(root.right, target);
+    return right != -1 ? right + 1 : -1;
+}
+  Checking a Full Binary Tree., Score: 2
+
+public static boolean isFullTree(TreeNode root) {
+    if (root == null) return true;
+    if (root.left == null && root.right == null) return true;
+    if (root.left == null || root.right == null) return false;
+    return isFullTree(root.left) && isFullTree(root.right);
+}
+  
+Sorting Rectangles by Area, Score: 2
+
+public static int[][] sortRectangles(int[][] rectangles) {
+    int n = rectangles.length;
+    int[][] res = new int[n][2];
+    for (int i = 0; i < n; i++) {
+        res[i][0] = rectangles[i][0];
+        res[i][1] = rectangles[i][1];
+    }
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            int a1 = res[j][0] * res[j][1];
+            int a2 = res[j + 1][0] * res[j + 1][1];
+            if (a1 > a2) {
+                int[] t = res[j];
+                res[j] = res[j + 1];
+                res[j + 1] = t;
+            }
+        }
+    }
+    return res;
+}
+  Token Game and Finding Maximum Score, Score: 2
+
+public static int bagOfTokensScore(int[] tokens, int power) {
+    for (int i = 0; i < tokens.length; i++) {
+        for (int j = 0; j < tokens.length - i - 1; j++) {
+            if (tokens[j] > tokens[j + 1]) {
+                int t = tokens[j];
+                tokens[j] = tokens[j + 1];
+                tokens[j + 1] = t;
+            }
+        }
+    }
+    int score = 0, max = 0, left = 0, right = tokens.length - 1;
+    while (left <= right) {
+        if (power >= tokens[left]) {
+            power -= tokens[left++];
+            score++;
+            max = Math.max(max, score);
+        } else if (score > 0) {
+            power += tokens[right--];
+            score--;
+        } else {
+            break;
+        }
+    }
+    return max;
+}
+  Quick Sort, Score: 3
+
+public static void sort(IntTracker[] arr) {
+    quickSort(arr, 0, arr.length - 1);
+}
+
+private static void quickSort(IntTracker[] arr, int low, int high) {
+    if (low < high) {
+        int p = partition(arr, low, high);
+        quickSort(arr, low, p - 1);
+        quickSort(arr, p + 1, high);
+    }
+}
+
+private static int partition(IntTracker[] arr, int low, int high) {
+    int pivot = arr[high].getValue();
+    int i = low - 1;
+    for (int j = low; j < high; j++) {
+        if (arr[j].getValue() <= pivot) {
+            i++;
+            IntTracker t = arr[i];
+            arr[i] = arr[j];
+            arr[j] = t;
+        }
+    }
+    IntTracker t = arr[i + 1];
+    arr[i + 1] = arr[high];
+    arr[high] = t;
+    return i + 1;
+}
+Anagram Detection, Score: 2
+
+static class HashTask {
+
+    public boolean isAnagram(String s1, String s2) {
+        if (s1.length() != s2.length()) return false;
+        java.util.HashMap<Character, Integer> map = new java.util.HashMap<>();
+        for (int i = 0; i < s1.length(); i++) {
+            map.put(s1.charAt(i), map.getOrDefault(s1.charAt(i), 0) + 1);
+            map.put(s2.charAt(i), map.getOrDefault(s2.charAt(i), 0) - 1);
+        }
+        for (int v : map.values()) {
+            if (v != 0) return false;
+        }
+        return true;
+    }
+
+}
+  Selection Sort, Score: 2
+
+public static void sort(IntTracker[] arr) {
+    for (int i = 0; i < arr.length; i++) {
+        int min = i;
+        for (int j = i + 1; j < arr.length; j++) {
+            if (arr[j].getValue() < arr[min].getValue()) {
+                min = j;
+            }
+        }
+        IntTracker t = arr[i];
+        arr[i] = arr[min];
+        arr[min] = t;
+    }
+}
+  Merging Intersecting Segments, Score: 2
+public static int[][] mergeIntervals(int[][] intervals) {
+    int n = intervals.length;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (intervals[j][0] > intervals[j + 1][0]) {
+                int[] t = intervals[j];
+                intervals[j] = intervals[j + 1];
+                intervals[j + 1] = t;
+            }
+        }
+    }
+    int[][] temp = new int[n][2];
+    int idx = 0;
+    temp[0] = intervals[0];
+    for (int i = 1; i < n; i++) {
+        if (intervals[i][0] <= temp[idx][1]) {
+            if (intervals[i][1] > temp[idx][1]) temp[idx][1] = intervals[i][1];
+        } else {
+            idx++;
+            temp[idx] = intervals[i];
+        }
+    }
+    int[][] res = new int[idx + 1][2];
+    for (int i = 0; i <= idx; i++) {
+        res[i][0] = temp[i][0];
+        res[i][1] = temp[i][1];
+    }
+    return res;
+}
+Linked List: Finding the Middle Element, Score: 2
+
+static class MiddleNodeTask {
+
+    public int findMiddle(Node head) {
+        if (head == null) return -1;
+        Node slow = head, fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow.data;
+    }
+
+}
+ Stack: Parentheses Balance, Score: 2
+
+static class BracketTask {
+
+    public boolean isBalanced(String s) {
+        int count = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '(') count++;
+            else count--;
+            if (count < 0) return false;
+        }
+        return count == 0;
+    }
+
+}
+ Obtaining Hexadecimal Characters from Binary Signals, Score: 2
+
+public static char convertToHexChar(boolean[] bits) {
+    int val = 0;
+    for (int i = 0; i < 4; i++) {
+        if (bits[i]) val = val * 2 + 1;
+        else val = val * 2;
+    }
+    if (val < 10) return (char)('0' + val);
+    return (char)('A' + val - 10);
+}
+  Password Combination Generation, Score: 2
+
+static class SafeTask {
+
+    public List<String> findCodes(String digits, int length) {
+        List<String> res = new java.util.ArrayList<>();
+        generate(digits, length, "", res);
+        return res;
+    }
+
+    private void generate(String digits, int length, String current, List<String> res) {
+        if (current.length() == length) {
+            res.add(current);
+            return;
+        }
+        for (int i = 0; i < digits.length(); i++) {
+            generate(digits, length, current + digits.charAt(i), res);
+        }
+    }
+
+}
+  Generating Pascal’s Triangle, Score: 2
+
+static class Task {
+
+    public List<List<Integer>> generate(int numRows) {
+        List<List<Integer>> res = new java.util.ArrayList<>();
+        for (int i = 0; i < numRows; i++) {
+            List<Integer> row = new java.util.ArrayList<>();
+            for (int j = 0; j <= i; j++) {
+                if (j == 0 || j == i) row.add(1);
+                else row.add(res.get(i - 1).get(j - 1) + res.get(i - 1).get(j));
+            }
+            res.add(row);
+        }
+        return res;
+    }
+
+}
+  Triangle with Maximum Perimeter, Score: 2
+
+public static int largestPerimeter(int[] nums) {
+    int n = nums.length;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (nums[j] > nums[j + 1]) {
+                int t = nums[j];
+                nums[j] = nums[j + 1];
+                nums[j + 1] = t;
+            }
+        }
+    }
+    for (int i = n - 1; i >= 2; i--) {
+        if (nums[i - 2] + nums[i - 1] > nums[i]) {
+            return nums[i - 2] + nums[i - 1] + nums[i];
+        }
+    }
+    return 0;
+}
+  Text Compression (Run-Length Encoding), Score: 2
+
+static class Task {
+
+    public int compress(char[] chars) {
+        int write = 0, read = 0;
+        while (read < chars.length) {
+            char c = chars[read];
+            int count = 0;
+            while (read < chars.length && chars[read] == c) {
+                read++;
+                count++;
+            }
+            chars[write++] = c;
+            if (count > 1) {
+                String s = String.valueOf(count);
+                for (int i = 0; i < s.length(); i++) {
+                    chars[write++] = s.charAt(i);
+                }
+            }
+        }
+        return write;
+    }
+
+}
+  Insertion Sort, Score: 2
+
+public static void sort(IntTracker[] arr) {
+    for (int i = 1; i < arr.length; i++) {
+        IntTracker key = arr[i];
+        int j = i - 1;
+        while (j >= 0 && arr[j].getValue() > key.getValue()) {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        arr[j + 1] = key;
+    }
+}
+ Checking a Binary Search Tree (BST), Score: 2
+
+public static boolean isValidBST(TreeNode root) {
+    return check(root, Long.MIN_VALUE, Long.MAX_VALUE);
+}
+
+private static boolean check(TreeNode node, long min, long max) {
+    if (node == null) return true;
+    if (node.val <= min || node.val >= max) return false;
+    return check(node.left, min, node.val) && check(node.right, node.val, max);
+}
+ The height of a node in a binary tree., Score: 2
+
+public static int getNodeHeight(TreeNode root) {
+    if (root == null) return 0;
+    int left = getNodeHeight(root.left);
+    int right = getNodeHeight(root.right);
+    return 1 + Math.max(left, right);
+}
+  Finding Words on the Same Keyboard Row, Score: 2
+
+public static String[] findWords(String[] words) {
+    String[] rows = {"qwertyuiop", "asdfghjkl", "zxcvbnm"};
+    java.util.HashMap<Character, Integer> map = new java.util.HashMap<>();
+    for (int i = 0; i < 3; i++) {
+        for (char c : rows[i].toCharArray()) {
+            map.put(c, i);
+            map.put(Character.toUpperCase(c), i);
+        }
+    }
+    String[] temp = new String[words.length];
+    int idx = 0;
+    for (String word : words) {
+        if (word.isEmpty()) continue;
+        int row = map.get(word.charAt(0));
+        boolean same = true;
+        for (char c : word.toCharArray()) {
+            if (map.get(c) != row) {
+                same = false;
+                break;
+            }
+        }
+        if (same) temp[idx++] = word;
+    }
+    String[] res = new String[idx];
+    for (int i = 0; i < idx; i++) res[i] = temp[i];
+    return res;
+}
+
