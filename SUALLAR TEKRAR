@@ -1,559 +1,309 @@
-The height of a node in a binary tree      2
-public static int getNodeHeight(TreeNode root) {
-    if (root == null) return 0;
-    return 1 + Math.max(getNodeHeight(root.left), getNodeHeight(root.right));
-}
-
-
-Finding the Median of an Array     2
-public static double findMedian(int[] arr) {
-    for(int i=0;i<arr.length-1;i++){
-        for(int j=0;j<arr.length-i-1;j++){
-        if(arr[j]>arr[j+1]){
-            int temp=arr[j];
-            arr[j]=arr[j+1];
-            arr[j+1]=temp;
-        }
-    }
-    }
-    if(arr.length%2==1) return arr[arr.length/2];
-    return (arr[arr.length/2-1]+arr[arr.length/2])/2.0;
-}
-
-
-Reversing Words in a String, Score: 2 
-
-public static String reverseWords(String s) {
-    String[] words = s.trim().split(" +");
-    StringBuilder sb = new StringBuilder();
-    for (int i = words.length - 1; i >= 0; i--) {
-        sb.append(words[i]);
-        if (i > 0) sb.append(" ");
-    }
-    return sb.toString();
-}
-
-Checking a Full Binary Tree., 2
-
-public static boolean isFullTree(TreeNode root) {
-    if (root == null) return true;
-    if (root.left == null && root.right == null) return true;
-    if (root.left == null || root.right == null) return false;
-    return isFullTree(root.left) && isFullTree(root.right);
-}
-
-
-Anagram Detection
-static class HashTask {
-    public boolean isAnagram(String s1, String s2) {
-        char[] a = s1.toCharArray(), b = s2.toCharArray();
-        Arrays.sort(a); Arrays.sort(b);
-        return Arrays.equals(a, b);
-    }
-}
-
-Finding the Highest-Value Elements       2
-static class PriorityTask {
-    public List<Integer> getTopK(int[] nums, int k) {
-        PriorityQueue<Integer> pq = new PriorityQueue<>((a,b) -> b - a);
-        for (int n : nums) pq.offer(n);
-        List<Integer> res = new ArrayList<>();
-        while (k-- > 0) res.add(pq.poll());
-        return res;
-    }
-}
-
-
-Balanced binary tree      2
-public static boolean isBalanced(TreeNode root) {
-    return balanced(root) != -1;
-}
-static int balanced(TreeNode n) {
-    if (n == null) return 0;
-    int left = balanced(n.left);
-    if (left == -1) return -1;
-    int right = balanced(n.right);
-    if (right == -1) return -1;
-    return Math.abs(left - right) > 1 ? -1 : 1 + Math.max(left, right);
-
-
-
- The depth of a specific node in a binary tree.        2
-public static int getDepth(TreeNode root, int target) {
-    if (root == null) return -1;
-    if (root.val == target) return 0;
-    int left = getDepth(root.left, target);
-    int right = getDepth(root.right, target);
-    return (left == -1 && right == -1) ? -1 : 1 + Math.max(left, right);
-}
-
-
-
-
-
-ATM – Payment with Standart Banknotes 2
-
-
-static class ATMTask {
-
-    public String calculateATM(int amount) {
-        int[] notes = {100, 50, 20, 10, 5, 1};
-        StringBuilder sb = new StringBuilder();
-        for (int note : notes) {
-            while (amount >= note) {
-                if (sb.length() > 0) sb.append(",");
-                sb.append(note);
-                amount -= note;
-            }
-        }
-        return sb.toString();
-    }
-}
-
-Building the Queue Structure      2
-static class MyQueue {
-    int[] arr = new int[1000];
-    int front = 0, rear = 0;
-    public void enqueue(int x) { arr[rear++] = x; }
-    public int dequeue() { return front == rear ? -1 : arr[front++]; }
-    public int peek() { return front == rear ? -1 : arr[front]; }
-}
-
-
-Bag of Tokens
-static class Task {
-    public int bagOfTokensScore(int[] tokens, int power) {
-        Arrays.sort(tokens);
-        int l = 0, r = tokens.length - 1, score = 0, max = 0;
-        while (l <= r) {
-            if (power >= tokens[l]) { power -= tokens[l++]; score++; max = Math.max(max, score); }
-            else if (score > 0) { power += tokens[r--]; score--; }
-            else break;
-        }
-        return max;
-    }
-}
-
-Reconstruct Itinerary
-static class Task2 {
-    public String[] reconstructItinerary(String[][] tickets) {
-        Map<String, String> map = new HashMap<>();
-        Set<String> arrivals = new HashSet<>();
-        for (String[] t : tickets) { map.put(t[0], t[1]); arrivals.add(t[1]); }
-        String start = null;
-        for (String[] t : tickets) if (!arrivals.contains(t[0])) { start = t[0]; break; }
-        String[] res = new String[tickets.length + 1];
-        res[0] = start;
-        for (int i = 1; i <= tickets.length; i++) res[i] = map.get(res[i-1]);
-        return res;
-    }
-}
-
-Simulate Bacteria
-static class Task3 {
-    public int simulateBacteria(int m, int l, int t) {
-        List<Integer> bacteria = new ArrayList<>();
-        bacteria.add(0);
-        for (int minute = 1; minute <= t; minute++) {
-            List<Integer> next = new ArrayList<>();
-            for (int age : bacteria) {
-                int newAge = age + 1;
-                if (newAge >= l) continue;
-                if (newAge % m == 0) { next.add(0); next.add(0); }
-                else next.add(newAge);
-            }
-            bacteria = next;
-        }
-        return bacteria.size();
-    }
-}
-
-Keyboard Row
-static class Task4 {
-    public String[] findWords(String[] words) {
-        String[] rows = {"qwertyuiop", "asdfghjkl", "zxcvbnm"};
-        List<String> res = new ArrayList<>();
-        for (String w : words) {
-            String lower = w.toLowerCase();
-            for (String row : rows) {
-                boolean ok = true;
-                for (char c : lower.toCharArray()) if (row.indexOf(c) == -1) { ok = false; break; }
-                if (ok) { res.add(w); break; }
-            }
-        }
-        return res.toArray(new String[0]);
-    }
-}
-
-Conversion of Roman Numerals to Integers, Score: 2
-
-public static int romanToInt(String s) {
-    int res = 0;
-    for (int i = 0; i < s.length(); i++) {
-        int v = val(s.charAt(i));
-        if (i + 1 < s.length() && v < val(s.charAt(i + 1))) {
-            res -= v;
-        } else {
-            res += v;
-        }
-    }
-    return res;
-}
-
-private static int val(char c) {
-    if (c == 'I') return 1;
-    if (c == 'V') return 5;
-    if (c == 'X') return 10;
-    if (c == 'L') return 50;
-    if (c == 'C') return 100;
-    if (c == 'D') return 500;
-    return 1000;
-}
-
-Teemo Attacking
-static class Task6 {
-    public int findPoisonedDuration(int[] timeSeries, int duration) {
-        if (timeSeries.length == 0) return 0;
-        int total = duration;
-        for (int i = 1; i < timeSeries.length; i++) {
-            total += Math.min(duration, timeSeries[i] - timeSeries[i - 1]);
-        }
-        return total;
-    }
-
-}
-
-Caesar Cipher
-static class Task7 {
-    public String encrypt(String s, int shift) {
-        StringBuilder r = new StringBuilder();
-        for (char c : s.toCharArray()) {
-            if (Character.isUpperCase(c)) r.append((char)((c - 'A' + shift) % 26 + 'A'));
-            else if (Character.isLowerCase(c)) r.append((char)((c - 'a' + shift) % 26 + 'a'));
-            else r.append(c);
-        }
-        return r.toString();
-    }
-}
-
-Merge Intervals
-static class Task10 {
-    public int[][] mergeIntervals(int[][] intervals) {
-        Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
-        List<int[]> res = new ArrayList<>();
-        for (int[] cur : intervals) {
-            if (!res.isEmpty() && cur[0] <= res.get(res.size()-1)[1])
-                res.get(res.size()-1)[1] = Math.max(res.get(res.size()-1)[1], cur[1]);
-            else res.add(cur);
-        }
-        return res.toArray(new int[0][]);
-    }
-}
-
-
-
-Bits to Hex Char
-static class Task13 {
-    public char convertToHexChar(boolean[] bits) {
-        int n = 0;
-        for (boolean b : bits) n = n * 2 + (b ? 1 : 0);
-        return n < 10 ? (char)('0' + n) : (char)('A' + n - 10);
-    }
-}
-
-Max Product Difference
-static class Task14 {
-    public int maxProductDifference(int[] nums) {
-        Arrays.sort(nums);
-        int n = nums.length;
-        return nums[n-1] * nums[n-2] - nums[0] * nums[1];
-    }
-}
-
-Array Intersection
-static class Task15 {
-    public int[] intersection(int[] arr1, int[] arr2) {
-        Set<Integer> set = new HashSet<>();
-        for (int n : arr1) set.add(n);
-        TreeSet<Integer> res = new TreeSet<>();
-        for (int n : arr2) if (set.contains(n)) res.add(n);
-        return res.stream().mapToInt(Integer::intValue).toArray();
-    }
-}
-
-
-Run-Length Encoding
-static class Task18 {
-    public int compress(char[] chars) {
-        int write = 0, i = 0;
-        while (i < chars.length) {
-            int j = i;
-            while (j < chars.length && chars[j] == chars[i]) j++;
-            chars[write++] = chars[i];
-            if (j - i > 1) for (char c : String.valueOf(j - i).toCharArray()) chars[write++] = c;
-            i = j;
-        }
-        return write;
-    }
-}
-
-Middle of Linked List
-static class MiddleNodeTask {
-    public int findMiddle(Node head) {
-        if (head == null) return -1;
-        Node slow = head, fast = head;
-        while (fast.next != null && fast.next.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
-        }
-        if (fast.next != null) slow = slow.next;
-        return slow.data;
-    }
-}
-
-Gas Station
-static class Task20 {
-    public int canCompleteCircuit(int[] gas, int[] cost) {
-        int total = 0, tank = 0, start = 0;
-        for (int i = 0; i < gas.length; i++) {
-            total += gas[i] - cost[i];
-            tank += gas[i] - cost[i];
-            if (tank < 0) { start = i + 1; tank = 0; }
-        }
-        return total < 0 ? -1 : start;
-    }
-}
-
-Longest Common Prefix
-static class Task21 {
-    public String longestCommonPrefix(String[] strs) {
-        String prefix = strs[0];
-        for (int i = 1; i < strs.length; i++)
-            while (strs[i].indexOf(prefix) != 0)
-                prefix = prefix.substring(0, prefix.length() - 1);
-        return prefix;
-    }
-}
-
-Expand Array
-static class Task22 {
-    public int[] expandArray(IntTracker nums) {
-        int total = 0;
-        for (int i = 0; i < nums.size(); i++) total += nums.get(i);
-        int[] res = new int[total];
-        int idx = 0;
-        for (int i = 0; i < nums.size(); i++) {
-            int v = nums.get(i);
-            for (int j = 0; j < v; j++) res[idx++] = v;
-        }
-        return res;
-    }
-}
-
-Largest Triangle Perimeter
-static class Task25 {
-    public int largestPerimeter(int[] nums) {
-        Arrays.sort(nums);
-        for (int i = nums.length - 1; i >= 2; i--)
-            if (nums[i-2] + nums[i-1] > nums[i]) return nums[i-2] + nums[i-1] + nums[i];
-        return 0;
-    }
-}
-
-Generate Codes
-static class SafeTask {
-    public List<String> findCodes(String digits, int length) {
-        List<String> res = new ArrayList<>();
-        generate(digits, length, "", res);
-        return res;
-    }
-    private void generate(String digits, int length, String current, List<String> res) {
-        if (current.length() == length) { res.add(current); return; }
-        for (char c : digits.toCharArray()) generate(digits, length, current + c, res);
-    }
-}
-
-Find Median
-public static double findMedian(int[] arr) {
-    for (int i = 0; i < arr.length; i++) {
-        for (int j = 0; j < arr.length - i - 1; j++) {
-            if (arr[j] > arr[j + 1]) {
-                int t = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = t;
-            }
-        }
-    }
-    int n = arr.length;
-    if (n % 2 == 1) return arr[n / 2];
-    return (arr[n / 2 - 1] + arr[n / 2]) / 2.0;
-}
-
-Sort Rectangles
-static class Task29 {
-    public int[][] sortRectangles(int[][] rectangles) {
-        Integer[] idx = new Integer[rectangles.length];
-        for (int i = 0; i < idx.length; i++) idx[i] = i;
-        Arrays.sort(idx, (a, b) -> rectangles[a][0]*rectangles[a][1] - rectangles[b][0]*rectangles[b][1]);
-        int[][] res = new int[rectangles.length][];
-        for (int i = 0; i < idx.length; i++) res[i] = rectangles[idx[i]];
-        return res;
-    }
-}
-
-Roof to leaf Path Sum
-static class Task30 {
-    public boolean rootToLeafSum(TreeNode root, int targetSum) {
-        if (root == null) return false;
-        if (root.left == null && root.right == null) return root.val == targetSum;
-        return hasPathSum(root.left, targetSum - root.val) || hasPathSum(root.right, targetSum - root.val);
-    }
-}
-
-Valid Mountain Array
-static class Task31 {
-    public boolean validMountainArray(int[] arr) {
-        int i = 0, n = arr.length;
-        while (i + 1 < n && arr[i] < arr[i+1]) i++;
-        if (i == 0 || i == n - 1) return false;
-        while (i + 1 < n && arr[i] > arr[i+1]) i++;
-        return i == n - 1;
-    }
-}
-
-Game of Life 1D
-static class Task32 {
-    public int[] gameOfLife1D(int[] cells) {
-        int n = cells.length;
-        int[] res = new int[n];
-        for (int i = 0; i < n; i++) {
-            int left = i > 0 ? cells[i-1] : 0;
-            int right = i < n-1 ? cells[i+1] : 0;
-            res[i] = left != right ? 1 : 0;
-        }
-        return res;
-    }
-}
-
-
-Strong Password
-static class Task34 {
-    public boolean isStrongPassword(String password) {
-        if (password.length() < 8) return false;
-        boolean upper = false, digit = false;
-        for (char c : password.toCharArray()) {
-            if (Character.isUpperCase(c)) upper = true;
-            if (Character.isDigit(c)) digit = true;
-        }
-        return upper && digit;
-    }
-}
-
-Max Node Degree
-static class Task36 {
-    public int getMaxDegree(Node root) {
-        if (root == null) return 0;
-        int max = root.children.size();
-        for (Node child : root.children)
-            max = Math.max(max, getMaxDegree(child));
-        return max;
-    }
-}
-
-Valid Binary Search Tree
-static class Task37 {
-    public boolean isValidBST(TreeNode root) {
-        return check(root, Long.MIN_VALUE, Long.MAX_VALUE);
-    }
-    public boolean check(TreeNode n, long min, long max) {
-        if (n == null) return true;
-        if (n.val <= min || n.val >= max) return false;
-        return check(n.left, min, n.val) && check(n.right, n.val, max);
-    }
-}
-
-Pascal's Triangle
-static class Task38 {
-    public List<List<Integer>> generate(int numRows) {
-        List<List<Integer>> res = new ArrayList<>();
-        for (int i = 0; i < numRows; i++) {
-            List<Integer> row = new ArrayList<>();
-            for (int j = 0; j <= i; j++)
-                row.add(j == 0 || j == i ? 1 : res.get(i-1).get(j-1) + res.get(i-1).get(j));
-            res.add(row);
-        }
-        return res;
-    }
-}
-
-Circular Array Sum
-static class Task39 {
-    public int calculateCircularSum(int[] data, int startIndex) {
-        int n = data.length, sum = 0;
-        for (int i = 0; i < n; i++) sum += data[(startIndex - i + n) % n];
-        return sum;
-    }
-}
-
-Find K Closest Numbers
-static class PriorityTask2 {
-    public List<Integer> findClosest(int[] nums, int k, int target) {
-        PriorityQueue<Integer> pq = new PriorityQueue<>((a,b) -> Math.abs(a-target) - Math.abs(b-target));
-        for (int n : nums) pq.offer(n);
-        List<Integer> res = new ArrayList<>();
-        while (k-- > 0) res.add(pq.poll());
-        return res;
-    }
-}
-
-Balanced Brackets
-static class BracketTask {
-    public boolean isBalanced(String s) {
-        int count = 0;
-        for (char c : s.toCharArray()) {
-            if (c == '(') count++;
-            else if (--count < 0) return false;
-        }
-        return count == 0;
-    }
-}
-
-Josephus Problem
-static class Task42 {
-    public int findTheWinner(int n, int k) {
-        int winner = 0;
-        for (int i = 2; i <= n; i++) winner = (winner + k) % i;
-        return winner + 1;
-    }
-}
-
-First Unique Character
-static class StringTask {
-
-    public int firstUniqChar(String s) {
-        int[] freq = new int[26];
-        for (int i = 0; i < s.length(); i++) {
-            freq[s.charAt(i) - 'a']++;
-        }
-        for (int i = 0; i < s.length(); i++) {
-            if (freq[s.charAt(i) - 'a'] == 1) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-}
-
-
-Insertion Sort
-static class Task44 {
-    public void sort(IntTracker[] arr) {
-        for (int i = 1; i < arr.length; i++) {
-            IntTracker key = arr[i];
-            int j = i - 1;
-            while (j >= 0 && arr[j].getValue() > key.getValue()) { arr[j+1] = arr[j]; j--; }
-            arr[j+1] = key;
-        }
-    }
-}
+-- 1. Create a table Users with a primary key user_id and a unique email.
+-- What is the difference between them?
+
+CREATE TABLE Users (
+    user_id INT PRIMARY KEY,
+    email VARCHAR(255) UNIQUE
+);
+
+/*
+PRIMARY KEY = UNIQUE + NOT NULL, only one per table.
+UNIQUE = duplicate values not allowed, NULL values allowed.
+*/
+
+-- 2. Build a report with one column labelled by type:
+-- all customer names and all supplier names together.
+
+SELECT customer_name AS name, 'Customer' AS type
+FROM Customers
+UNION
+SELECT supplier_name AS name, 'Supplier' AS type
+FROM Suppliers;
+
+-- 3. Find employees who have the highest salary in the company.
+
+SELECT *
+FROM Employees
+WHERE salary = (SELECT MAX(salary) FROM Employees);
+
+-- 4. Find orders with an amount higher than the overall average order amount.
+
+SELECT *
+FROM Orders
+WHERE amount > (
+    SELECT AVG(amount)
+    FROM Orders
+);
+
+-- 5. Show customers whose total order amount is above 1000,
+-- sorted from highest to lowest.
+
+SELECT customer_id,
+       SUM(amount) AS total_order_amount
+FROM Orders
+GROUP BY customer_id
+HAVING SUM(amount) > 1000
+ORDER BY total_order_amount DESC;
+
+-- 6. Count employees for each combination of department and city.
+
+SELECT department,
+       city,
+       COUNT(*) AS employee_count
+FROM Employees
+GROUP BY department, city;
+
+-- 7. Sort employees by department ascending,
+-- then by salary descending within each department.
+
+SELECT *
+FROM Employees
+ORDER BY department ASC, salary DESC;
+
+-- 8. Select employees who are NOT (in Baku or earning less than 1000).
+
+SELECT *
+FROM Employees
+WHERE NOT (city = 'Baku' OR salary < 1000);
+
+-- 9. Copy all employees from Baku into the table Employees_Archive
+-- (same structure).
+
+INSERT INTO Employees_Archive
+SELECT *
+FROM Employees
+WHERE city = 'Baku';
+
+-- 10. Delete duplicate employees (same first_name and last_name),
+-- keeping the one with the smallest emp_id.
+
+DELETE e1
+FROM Employees e1
+JOIN Employees e2
+ON e1.first_name = e2.first_name
+AND e1.last_name = e2.last_name
+AND e1.emp_id > e2.emp_id
+
+-- 11. Set the salary to the company average for all employees whose salary is NULL.
+ 
+UPDATE Employees
+SET salary = (SELECT AVG(salary) FROM Employees)
+WHERE salary IS NULL;
+ 
+-- 12. Find the average of the department salary totals (subquery in FROM).
+ 
+SELECT AVG(dept_total) AS avg_department_salary
+FROM (
+SELECT SUM(salary) AS dept_total
+FROM Employees
+GROUP BY department
+) t;
+ 
+-- 13. Find customers who have never placed an order.
+ 
+SELECT *
+FROM Customers c
+WHERE NOT EXISTS (
+SELECT 1
+FROM Orders o
+WHERE o.customer_id = c.customer_id
+);
+ 
+-- 14. Find the second highest salary.
+ 
+SELECT MAX(salary)
+FROM Employees
+WHERE salary < (
+SELECT MAX(salary)
+FROM Employees
+);
+ 
+-- 15. Find employees who earn more than the average salary of their own department (correlated subquery).
+ 
+SELECT *
+FROM Employees e
+WHERE salary > (
+SELECT AVG(salary)
+FROM Employees
+WHERE department = e.department
+);
+ 
+-- 16. Find duplicate last names in Employees.
+ 
+SELECT last_name, COUNT(*) AS cnt
+FROM Employees
+GROUP BY last_name
+HAVING COUNT(*) > 1;
+ 
+-- 17. Get all cities from Customers and Suppliers (no duplicates), sorted alphabetically.
+ 
+SELECT city
+FROM Customers
+UNION
+SELECT city
+FROM Suppliers
+ORDER BY city;
+ 
+-- 18. Show the average salary per department only for employees hired after 2020
+-- and only departments with an average above 3000.
+ 
+SELECT department,
+AVG(salary) AS avg_salary
+FROM Employees
+WHERE hire_date > '2020-12-31'
+GROUP BY department
+HAVING AVG(salary) > 3000;
+ 
+-- 19. Create Orders with a foreign key that automatically deletes orders
+-- when the customer is deleted.
+ 
+CREATE TABLE Orders (
+order_id INT PRIMARY KEY,
+customer_id INT,
+FOREIGN KEY (customer_id)
+REFERENCES Customers(customer_id)
+ON DELETE CASCADE
+);
+ 
+-- 20. Create a table OrderItems where the primary key is a combination
+-- of order_id and prod_id.
+ 
+CREATE TABLE OrderItems (
+order_id INT,
+prod_id INT,
+quantity INT,
+PRIMARY KEY (order_id, prod_id)
+);
+
+21. Can you use ORDER BY inside a subquery?
+Yes, but usually only with TOP, LIMIT, or OFFSET.
+
+22. What is the result of SELECT 1 UNION SELECT 1 UNION ALL SELECT 1?
+1
+1
+
+23. What does SELECT DISTINCT do and how is it different from GROUP BY?
+DISTINCT removes duplicate rows.
+GROUP BY groups rows for aggregation.
+
+24. Why does WHERE column = NULL return nothing, and how do you fix it?
+Because NULL cannot be compared using =.
+Use IS NULL instead.
+
+25. What do ANY and ALL mean with subqueries?
+ANY = condition must be true for at least one value.
+ALL = condition must be true for every value.
+
+26. How do you delete duplicate rows while keeping one copy?
+Delete duplicates and keep the row with the smallest ID.
+
+27. What is INSERT ... SELECT?
+It inserts data into a table from the result of a SELECT query.
+
+28. How do you update a column using a value from a subquery?
+Use UPDATE with a subquery in the SET clause.
+
+29. How does ORDER BY work with multiple columns and can it use aliases?
+It sorts by the first column, then the second if needed.
+Yes, aliases can be used.
+
+30. What is the difference between COUNT(*), COUNT(column), and COUNT(DISTINCT column)?
+COUNT(*) = counts all rows.
+COUNT(column) = counts non-NULL values.
+COUNT(DISTINCT column) = counts unique non-NULL values.
+
+31. What is the precedence of NOT, AND, and OR? Evaluate A OR B AND C.
+NOT > AND > OR
+A OR B AND C = A OR (B AND C)
+
+32. Why can NOT IN return no rows when the subquery contains NULL?
+Because NULL makes the comparison UNKNOWN.
+
+33. Compare DELETE, TRUNCATE, and DROP.
+DELETE = removes selected rows.
+TRUNCATE = removes all rows.
+DROP = removes the entire table.
+
+34. What is the logical order of execution of a SQL query?
+FROM â WHERE â GROUP BY â HAVING â SELECT â ORDER BY
+
+35. Why can't you use aggregate functions in WHERE? What should you use instead?
+Because WHERE is executed before aggregation.
+Use HAVING instead.
+
+36. Where do you put ORDER BY when using UNION?
+At the end of the entire UNION query.
+
+37. Table A has values (1, 2, 2) and table B has (2, 3). What do UNION and UNION ALL return?
+UNION: (1, 2, 3)
+UNION ALL: (1, 2, 2, 2, 3)
+
+38. What conditions must two SELECT queries meet to be combined with UNION?
+They must have the same number of columns and compatible data types.
+
+39. What happens when you insert a child row whose foreign key value does not exist in the parent table?
+The insert fails with a foreign key constraint error.
+
+40. What is the difference between a primary key and a unique key?
+Primary Key: unique, NOT NULL, only one per table.
+Unique Key: unique values, NULL allowed, multiple per table.
+
+41. Which aggregate function counts the number of rows?
+COUNT()
+ 
+42. What is a subquery?
+A subquery is a query nested inside another query.
+ 
+43. What is the WHERE clause used for?
+It filters rows before grouping.
+ 
+44. What is the HAVING clause used for?
+It filters groups after GROUP BY.
+ 
+45. What is the default sort order of ORDER BY?
+Ascending (ASC).
+ 
+46. What does GROUP BY do?
+It groups rows with the same values into summary rows.
+ 
+47. Is TRUNCATE a DDL or DML command?
+DDL (Data Definition Language).
+ 
+48. Name one difference between DELETE and TRUNCATE.
+DELETE removes selected rows, while TRUNCATE removes all rows.
+ 
+49. What does TRUNCATE do?
+It removes all rows from a table quickly.
+ 
+50. What does DELETE do?
+It removes rows from a table.
+
+51. What happens if you run UPDATE without a WHERE clause?
+It updates all rows in the table.
+
+52. What does UNION ALL do?
+It combines results from multiple SELECT statements and keeps duplicates.
+
+53. What does UNION do?
+It combines results from multiple SELECT statements and removes duplicates.
+
+54. What does the SELECT statement do?
+It retrieves data from a database table.
+
+55. Can a foreign key column contain duplicate values?
+Yes, a foreign key can contain duplicate values.
+
+56. Can a foreign key contain NULL values?
+Yes, unless it is defined as NOT NULL.
+
+57. What is a foreign key?
+A foreign key is a column that references the primary key of another table.
+
+58. How many primary keys can a table have?
+Only one primary key.
+
+59. Can a primary key contain NULL values?
+No, a primary key cannot contain NULL values.
+
+60. What is a primary key?
+A primary key is a column (or set of columns) that uniquely identifies each row in a table.
